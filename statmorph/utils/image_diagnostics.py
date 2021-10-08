@@ -209,7 +209,7 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
               norm=simple_norm(image, stretch='asinh', asinh_a=asinh_a))
     # Show original segmap
     contour_levels = [0.5]
-    contour_colors = [(0, 0, 0)]
+    contour_colors = 'tomato'  # [(0, 0, 0)]
     segmap_stamp = morph._segmap.data[morph._slice_stamp]
     Z = np.float64(segmap_stamp == morph.label)
     ax.contour(Z, contour_levels, colors=contour_colors, linewidths=1.5)
@@ -247,7 +247,7 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
               norm=simple_norm(image, stretch='asinh', asinh_a=asinh_a))
     # Show Gini segmap
     contour_levels = [0.5]
-    contour_colors = [(0, 0, 0)]
+    contour_colors = 'darkgray'  # [(0, 0, 0)]
     Z = np.float64(morph._segmap_gini)
     ax.contour(Z, contour_levels, colors=contour_colors, linewidths=1.5)
     # Some text

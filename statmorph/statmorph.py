@@ -1214,6 +1214,10 @@ class SourceMorphology(object):
     # Surface brightness  #
     #######################
     def _surface_brightness_generic(self, center, r, elongation, theta):
+        """
+        The output is in unit of [counts / pixel]
+        """
+
         image = self._cutout_stamp_maskzeroed
 
         a_in = r - 0.5 * self._annulus_width
