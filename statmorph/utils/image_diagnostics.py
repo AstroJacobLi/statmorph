@@ -115,7 +115,7 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
               framealpha=framealpha, edgecolor='k')
     ax.set_xlim(-0.5, nx-0.5)
     ax.set_ylim(-0.5, ny-0.5)
-    ax.set_title('Original Image (Log Stretch)', fontsize=14)
+    ax.set_title('Original Image (ASinh Stretch)', fontsize=14)
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
