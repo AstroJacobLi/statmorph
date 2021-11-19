@@ -9,6 +9,8 @@ import numpy as np
 import sys
 import skimage.transform
 import statmorph
+from matplotlib.patches import Ellipse
+import matplotlib.lines as mlines
 from astropy.visualization import simple_norm
 
 __all__ = ['make_figure']
@@ -201,15 +203,36 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
     ax.get_yaxis().set_visible(False)
 
     r = morph.rpetro_circ * morph._petro_extent_cas
-    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'b',
-            label=r'$r_{\rm petro, circ}$')
+    b_line = ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'b',
+                     label=r'$r_{\rm petro, circ}$')
+
     r = morph.rhalf_ellip
-    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'r',
-            label=r'$r_{\rm half}$')
+    ellipse1 = Ellipse((xca, yca), r, r / morph.elongation_asymmetry,
+                       angle=np.rad2deg(morph.orientation_asymmetry),
+                       edgecolor='r',
+                       ls='-', lw=2,
+                       facecolor='none',
+                       label=r'$r_{\rm half}$')
     r = morph.rmax_ellip
-    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'r--',
-            label=r'$r_{\rm max}$')
-    ax.legend(loc=4, fontsize=12, facecolor='w',
+    ellipse2 = Ellipse((xca, yca), r, r / morph.elongation_asymmetry,
+                       angle=np.rad2deg(morph.orientation_asymmetry),
+                       edgecolor='r',
+                       ls='--', lw=2,
+                       facecolor='none',
+                       label=r'$r_{\rm max}$')
+    ax.add_artist(ellipse1)
+    ax.add_artist(ellipse2)
+
+#     r = morph.rhalf_ellip
+    line0 = mlines.Line2D([], [], color='b', ls='-',
+                          label=r'$r_{\rm petro, circ}$')
+    line1 = mlines.Line2D([], [], color='r', ls='-', label=r'$r_{\rm half}$')
+    line2 = mlines.Line2D([], [], color='r', ls='--', label=r'$r_{\rm max}$')
+#     r = morph.rmax_ellip
+#     ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'r--',
+#             label=r'$r_{\rm max}$')
+
+    ax.legend(handles=[line0, line1, line2], loc=4, fontsize=12, facecolor='w',
               framealpha=framealpha, edgecolor='k')
     ###################
     # Original segmap #
