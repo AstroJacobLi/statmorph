@@ -200,6 +200,17 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
+    r = morph.rpetro_circ * morph._petro_extent_cas
+    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'b',
+            label=r'$r_{\rm petro, circ}$')
+    r = morph.rhalf_ellip
+    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'r',
+            label=r'$r_{\rm half}$')
+    r = morph.rmax_ellip
+    ax.plot(xca + r*np.cos(theta_vec), yca + r*np.sin(theta_vec), 'r--',
+            label=r'$r_{\rm max}$')
+    ax.legend(loc=4, fontsize=12, facecolor='w',
+              framealpha=framealpha, edgecolor='k')
     ###################
     # Original segmap #
     ###################
@@ -267,6 +278,7 @@ def make_figure(morph, asinh_a=0.05, framealpha=0.8):
             bbox=dict(facecolor='white', alpha=framealpha, boxstyle='round'))
     text = (r'$C = %.4f$' % (morph.concentration,) + '\n' +
             r'$A = %.4f$' % (morph.asymmetry,) + '\n' +
+            r'$A_{\rm out} = %.4f$' % (morph.outer_asymmetry,) + '\n' +
             r'$S = %.4f$' % (morph.smoothness,))
     ax.text(0.966, 0.034, text, fontsize=12,
             horizontalalignment='right', verticalalignment='bottom',
